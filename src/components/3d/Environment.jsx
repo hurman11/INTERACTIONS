@@ -38,7 +38,8 @@ function NeuralGridFloor() {
   useFrame((state) => {
     const t = state.clock.getElapsedTime()
     if (materialRef.current) {
-      materialRef.current.opacity = 0.04 + Math.sin(t * 0.3) * 0.015
+      materialRef.current.opacity = 0.05 + Math.sin(t * 0.25) * 0.02
+      materialRef.current.emissiveIntensity = 0.2 + Math.sin(t * 0.25) * 0.1
     }
   })
 
@@ -79,6 +80,10 @@ function AmbientOrbs() {
         child.position.x = Math.cos(t * orb.speed + orb.angle) * orb.radius
         child.position.z = Math.sin(t * orb.speed + orb.angle) * orb.radius
         child.position.y = orb.y + Math.sin(t * 0.3 + i) * 1.5
+        
+        // Organic scale breathing
+        const pulse = 1 + Math.sin(t * 0.5 + i) * 0.2
+        child.scale.setScalar(orb.scale * pulse)
       })
     }
   })
@@ -105,19 +110,19 @@ function AmbientOrbs() {
 export default function Environment({ enableHDRI = true }) {
   return (
     <group>
-      <ambientLight intensity={0.08} color="#4a0080" />
+      <ambientLight intensity={0.12} color="#4a0080" />
 
-      <PulsatingLight position={[0, 8, 0]} color="#00f0ff" intensity={0.6} speed={0.5} range={0.2} />
-      <PulsatingLight position={[0, -4, 0]} color="#bc34fa" intensity={0.3} speed={0.7} range={0.15} />
+      <PulsatingLight position={[0, 8, 0]} color="#00f0ff" intensity={0.8} speed={0.4} range={0.3} />
+      <PulsatingLight position={[0, -4, 0]} color="#bc34fa" intensity={0.4} speed={0.6} range={0.2} />
 
-      <OrbitalLight color="#00f0ff" radius={15} speed={0.15} intensity={0.35} yOffset={3} />
-      <OrbitalLight color="#bc34fa" radius={12} speed={-0.1} intensity={0.25} yOffset={-2} />
-      <OrbitalLight color="#ff5e00" radius={20} speed={0.08} intensity={0.15} yOffset={5} />
+      <OrbitalLight color="#00f0ff" radius={15} speed={0.15} intensity={0.4} yOffset={3} />
+      <OrbitalLight color="#bc34fa" radius={12} speed={-0.1} intensity={0.3} yOffset={-2} />
+      <OrbitalLight color="#ff5e00" radius={20} speed={0.08} intensity={0.2} yOffset={5} />
 
       <directionalLight
-        position={[5, 10, 5]}
-        intensity={0.15}
-        color="#8b5cf6"
+        position={[10, 15, 10]}
+        intensity={0.35}
+        color="#bc34fa"
       />
 
       <NeuralGridFloor />

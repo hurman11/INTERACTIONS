@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, Suspense, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Stars } from '@react-three/drei'
+import { useMotionValue } from 'framer-motion'
 import LoadingScreen from '@/components/ui/LoadingScreen'
 import HUD from '@/components/ui/HUD'
 import NavigationSystem from '@/components/ui/NavigationSystem'
@@ -23,10 +24,10 @@ import Terminal from '@/zones/Terminal'
 import useDeviceDetect from '@/hooks/useDeviceDetect'
 import useWorldProgress from '@/hooks/useWorldProgress'
 
-function Scene({ capabilities, scrollProgress, activeMember, setActiveMember }) {
+function Scene({ capabilities, scrollRef, activeMember, setActiveMember }) {
   return (
     <>
-      <CameraRig scrollProgress={scrollProgress}>
+      <CameraRig scrollRef={scrollRef}>
         <Environment enableHDRI={!capabilities.isLowEnd} />
         <Walkway />
         <Particles
@@ -56,7 +57,7 @@ function Scene({ capabilities, scrollProgress, activeMember, setActiveMember }) 
       <Fog />
 
       {capabilities.enablePostProcessing && (
-        <PostFX bloomIntensity={0.8} />
+        <PostFX scrollRef={scrollRef} bloomIntensity={0.8} />
       )}
     </>
   )
@@ -64,11 +65,12 @@ function Scene({ capabilities, scrollProgress, activeMember, setActiveMember }) 
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
-  const [scrollProgress, setScrollProgress] = useState(0)
   const [activeProject, setActiveProject] = useState(1)
   const [activeMember, setActiveMember] = useState(0)
   const capabilities = useDeviceDetect()
   const world = useWorldProgress()
+
+  const scrollMotionValue = useMotionValue(0)
 
   const scrollTarget = useRef(0)
   const scrollCurrent = useRef(0)
@@ -92,10 +94,8 @@ function App() {
     function animate() {
       scrollCurrent.current += (scrollTarget.current - scrollCurrent.current) * 0.08
 
-      if (Math.abs(scrollTarget.current - scrollCurrent.current) > 0.00001) {
-        setScrollProgress(scrollCurrent.current)
-        world.update(scrollCurrent.current)
-      }
+      scrollMotionValue.set(scrollCurrent.current)
+      world.update(scrollCurrent.current)
 
       raf = requestAnimationFrame(animate)
     }
@@ -166,7 +166,7 @@ function App() {
           <Suspense fallback={null}>
             <Scene
               capabilities={capabilities}
-              scrollProgress={scrollProgress}
+              scrollRef={scrollCurrent}
               activeMember={activeMember}
               setActiveMember={setActiveMember}
             />
@@ -176,7 +176,7 @@ function App() {
 
       {!isLoading && (
         <>
-          <HUD currentZone={world.currentZone} scrollProgress={scrollProgress} />
+          <HUD currentZone={world.currentZone} scrollMotion={scrollMotionValue} />
           <NavigationSystem currentZone={world.currentZone} onNavigate={handleNavigate} />
           <ProjectTerminal
             activeProject={activeProject}

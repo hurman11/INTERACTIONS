@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion'
+import { motion, useTransform } from 'framer-motion'
 import { ZONE_NAMES } from '@/utils/constants'
 
-export default function HUD({ currentZone = 0, scrollProgress = 0 }) {
+export default function HUD({ currentZone = 0, scrollMotion }) {
+  const width = useTransform(scrollMotion, [0, 1], ['0%', '100%'])
   return (
     <div className="fixed inset-0 pointer-events-none z-60">
       <div className="absolute top-5 left-6 flex items-center gap-3">
@@ -53,10 +54,9 @@ export default function HUD({ currentZone = 0, scrollProgress = 0 }) {
               className="h-full rounded-full"
               style={{
                 background: 'linear-gradient(90deg, #00f0ff, #bc34fa)',
-                boxShadow: '0 0 6px rgba(0, 240, 255, 0.4)'
+                boxShadow: '0 0 6px rgba(0, 240, 255, 0.4)',
+                width
               }}
-              animate={{ width: `${(scrollProgress * 100).toFixed(1)}%` }}
-              transition={{ duration: 0.1, ease: "linear" }}
             />
           </div>
         </div>
