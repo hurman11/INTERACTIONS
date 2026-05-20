@@ -1,183 +1,186 @@
-import { useRef, useMemo, useEffect } from 'react'
+import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { useGLTF, Line } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 
-// Helper to generate a random point on a sphere of a given radius
-function getRandomSpherePoint(radius) {
-  const u = Math.random()
-  const v = Math.random()
-  const theta = u * 2.0 * Math.PI
-  const phi = Math.acos(2.0 * v - 1.0)
-  const x = radius * Math.sin(phi) * Math.cos(theta)
-  const y = radius * Math.sin(phi) * Math.sin(theta)
-  const z = radius * Math.cos(phi)
-  return new THREE.Vector3(x, y, z)
-}
-
-export default function NetworkWorld() {
+function ConnectionNodes({ count = 40, radius = 4 }) {
   const groupRef = useRef()
-  const satellitesRef = useRef()
-  
-  // Load Earth hologram model
-  const { scene } = useGLTF('/assets/earth_hologram.glb')
-  
-  // Clone scene so we can modify its materials safely without impacting other instances
-  const clonedScene = useMemo(() => {
-    if (!scene) return null
-    const clone = scene.clone(true)
-    clone.traverse((child) => {
-      if (child.isMesh) {
-        child.material = new THREE.MeshStandardMaterial({
-          color: '#00f0ff',
-          emissive: '#005577',
-          emissiveIntensity: 1.2,
-          wireframe: true,
-          transparent: true,
-          opacity: 0.12,
-          blending: THREE.AdditiveBlending
-        })
-      }
-    })
-    return clone
-  }, [scene])
 
-  // Generate random data points on earth's surface
-  const R = 2.1 // radius of the earth model in world units
-  const dataNodes = useMemo(() => {
-    return Array.from({ length: 18 }, (_, i) => {
-      const position = getRandomSpherePoint(R)
-      return {
-        id: i,
-        position,
-        scale: 0.04 + Math.random() * 0.04,
-        pulseOffset: Math.random() * Math.PI * 2,
-        color: i % 2 === 0 ? '#00f0ff' : '#bc34fa'
-      }
-    })
-  }, [R])
-
-  // Generate Bezier curves connecting the nodes
-  const dataArcs = useMemo(() => {
-    const arcs = []
-    for (let i = 0; i < dataNodes.length; i++) {
-      const startNode = dataNodes[i]
-      // Connect to the next node and a random node to form a web
-      const targets = [
-        dataNodes[(i + 1) % dataNodes.length],
-        dataNodes[Math.floor(Math.random() * dataNodes.length)]
-      ]
-
-      targets.forEach((endNode) => {
-        if (startNode.id !== endNode.id) {
-          const pStart = startNode.position.clone()
-          const pEnd = endNode.position.clone()
-          
-          // Midpoint logic with radial elevation for arc height
-          const pMid = new THREE.Vector3().addVectors(pStart, pEnd).multiplyScalar(0.5)
-          const distance = pStart.distanceTo(pEnd)
-          pMid.normalize().multiplyScalar(R + distance * 0.45) // elevate arc
-          
-          const curve = new THREE.QuadraticBezierCurve3(pStart, pMid, pEnd)
-          const points = curve.getPoints(24) // 24 segments for smooth rendering
-          
-          arcs.push({
-            id: `${startNode.id}-${endNode.id}`,
-            points,
-            color: Math.random() > 0.4 ? startNode.color : endNode.color,
-            speed: 0.5 + Math.random() * 1.5,
-            offset: Math.random() * Math.PI
-          })
-        }
+  const nodes = useMemo(() => {
+    const data = []
+    for (let i = 0; i < count; i++) {
+      const phi = Math.acos(-1 + (2 * i) / count)
+      const theta = Math.sqrt(count * Math.PI) * phi
+      data.push({
+        position: [
+          radius * Math.cos(theta) * Math.sin(phi),
+          radius * Math.sin(theta) * Math.sin(phi),
+          radius * Math.cos(phi)
+        ],
+        scale: 0.03 + Math.random() * 0.04,
+        color: Math.random() > 0.5 ? '#00E5FF' : '#D946EF'
       })
     }
-    return arcs
-  }, [dataNodes, R])
+    return data
+  }, [count, radius])
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime()
-
-    // Gentle global rotation of Earth + Node complex
     if (groupRef.current) {
-      groupRef.current.rotation.y = t * 0.08
-      groupRef.current.rotation.x = Math.sin(t * 0.03) * 0.05
-    }
-
-    // Faster orbital rotation for the satellite ring
-    if (satellitesRef.current) {
-      satellitesRef.current.rotation.y = -t * 0.2
-      satellitesRef.current.rotation.z = Math.sin(t * 0.1) * 0.1
+      groupRef.current.rotation.y = t * 0.03
+      groupRef.current.rotation.x = Math.sin(t * 0.02) * 0.1
     }
   })
 
   return (
     <group ref={groupRef}>
-      {/* Placed Earth GLTF Model */}
-      {clonedScene && (
-        <group scale={1.0}>
-          <primitive object={clonedScene} />
-        </group>
-      )}
-
-      {/* Internal core glow point light */}
-      <pointLight color="#00f0ff" intensity={1.5} distance={10} decay={2} />
-
-      {/* Network Nodes (Pulsing city markers) */}
-      {dataNodes.map((node) => (
-        <mesh key={node.id} position={node.position.toArray()}>
+      {nodes.map((node, i) => (
+        <mesh key={i} position={node.position} scale={node.scale}>
           <sphereGeometry args={[1, 8, 8]} />
-          <meshBasicMaterial
+          <meshStandardMaterial
             color={node.color}
+            emissive={node.color}
+            emissiveIntensity={2}
             transparent
-            opacity={0.8}
+            opacity={0.7}
+            toneMapped={false}
           />
         </mesh>
       ))}
+    </group>
+  )
+}
 
-      {/* Network Connection Arcs */}
-      {dataArcs.map((arc) => (
-        <Line
-          key={arc.id}
-          points={arc.points}
-          color={arc.color}
-          lineWidth={1.2}
-          transparent
-          opacity={0.35}
-          blending={THREE.AdditiveBlending}
-        />
+function DataArcs({ count = 15, radius = 4 }) {
+  const groupRef = useRef()
+
+  const arcs = useMemo(() => {
+    const data = []
+    for (let i = 0; i < count; i++) {
+      const startPhi = Math.random() * Math.PI
+      const startTheta = Math.random() * Math.PI * 2
+      const endPhi = Math.random() * Math.PI
+      const endTheta = Math.random() * Math.PI * 2
+
+      const points = []
+      for (let t = 0; t <= 1; t += 0.05) {
+        const phi = startPhi + (endPhi - startPhi) * t
+        const theta = startTheta + (endTheta - startTheta) * t
+        const r = radius + Math.sin(t * Math.PI) * 0.8
+        points.push(new THREE.Vector3(
+          r * Math.cos(theta) * Math.sin(phi),
+          r * Math.sin(theta) * Math.sin(phi),
+          r * Math.cos(phi)
+        ))
+      }
+
+      data.push({
+        points,
+        color: i % 3 === 0 ? '#FF3B00' : i % 2 === 0 ? '#00E5FF' : '#D946EF'
+      })
+    }
+    return data
+  }, [count, radius])
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    if (groupRef.current) {
+      groupRef.current.rotation.y = t * 0.03
+    }
+  })
+
+  return (
+    <group ref={groupRef}>
+      {arcs.map((arc, i) => {
+        const geometry = new THREE.BufferGeometry().setFromPoints(arc.points)
+        return (
+          <line key={i} geometry={geometry}>
+            <lineBasicMaterial
+              color={arc.color}
+              transparent
+              opacity={0.15}
+              depthWrite={false}
+              blending={THREE.AdditiveBlending}
+            />
+          </line>
+        )
+      })}
+    </group>
+  )
+}
+
+function OrbitShells() {
+  const ringsRef = useRef([])
+
+  const configs = useMemo(() => [
+    { radius: 4.5, tube: 0.004, speed: 0.08, tiltX: Math.PI / 3, color: '#00E5FF', opacity: 0.08 },
+    { radius: 5, tube: 0.003, speed: -0.05, tiltX: Math.PI / 2.5, color: '#D946EF', opacity: 0.06 },
+    { radius: 5.5, tube: 0.003, speed: 0.03, tiltX: Math.PI / 1.8, color: '#1e3a5f', opacity: 0.04 },
+  ], [])
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    ringsRef.current.forEach((ring, i) => {
+      if (!ring) return
+      ring.rotation.z = t * configs[i].speed
+      ring.rotation.y = Math.sin(t * 0.08 + i) * 0.2
+    })
+  })
+
+  return (
+    <group>
+      {configs.map((cfg, i) => (
+        <mesh key={i} ref={el => ringsRef.current[i] = el} rotation={[cfg.tiltX, 0, 0]}>
+          <torusGeometry args={[cfg.radius, cfg.tube, 16, 100]} />
+          <meshStandardMaterial
+            color={cfg.color}
+            emissive={cfg.color}
+            emissiveIntensity={2}
+            transparent
+            opacity={cfg.opacity}
+            toneMapped={false}
+          />
+        </mesh>
       ))}
+    </group>
+  )
+}
 
-      {/* Orbital Satellite Ring */}
-      <group ref={satellitesRef}>
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[3.2, 0.005, 8, 64]} />
-          <meshBasicMaterial color="#bc34fa" transparent opacity={0.15} />
-        </mesh>
+export default function NetworkWorld({ position = [0, 0, 0] }) {
+  const { scene } = useGLTF('/assets/earth_hologram.glb')
+  const modelRef = useRef()
+  const clonedScene = useMemo(() => {
+    const clone = scene.clone(true)
+    clone.traverse((child) => {
+      if (child.isMesh) {
+        child.material = child.material.clone()
+        child.material.transparent = true
+        child.material.opacity = 0.85
+        child.material.emissive = new THREE.Color('#00E5FF')
+        child.material.emissiveIntensity = 0.2
+      }
+    })
+    return clone
+  }, [scene])
 
-        {/* Satellite 1 */}
-        <mesh position={[3.2, 0, 0]} scale={0.08}>
-          <octahedronGeometry />
-          <meshStandardMaterial
-            color="#bc34fa"
-            emissive="#bc34fa"
-            emissiveIntensity={2}
-            toneMapped={false}
-          />
-          <pointLight color="#bc34fa" intensity={0.5} distance={3} decay={2} />
-        </mesh>
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    if (modelRef.current) {
+      modelRef.current.rotation.y = t * 0.05
+    }
+  })
 
-        {/* Satellite 2 */}
-        <mesh position={[-3.2, 0, 0]} scale={0.08}>
-          <octahedronGeometry />
-          <meshStandardMaterial
-            color="#00f0ff"
-            emissive="#00f0ff"
-            emissiveIntensity={2}
-            toneMapped={false}
-          />
-          <pointLight color="#00f0ff" intensity={0.5} distance={3} decay={2} />
-        </mesh>
+  return (
+    <group position={position}>
+      <group ref={modelRef} scale={2.5}>
+        <primitive object={clonedScene} />
       </group>
+
+      <ConnectionNodes count={50} radius={4} />
+      <DataArcs count={20} radius={4} />
+      <OrbitShells />
+
+      <pointLight position={[0, 0, 0]} color="#00E5FF" intensity={1} distance={8} decay={2} />
     </group>
   )
 }

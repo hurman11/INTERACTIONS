@@ -76,7 +76,7 @@ function HolographicRing({ radius, y, speed, color, opacity }) {
 
 export default function FloatingGeometry({ count = 25 }) {
   const shapes = useMemo(() => {
-    const colors = ['#00f0ff', '#bc34fa', '#8b5cf6', '#00f0ff', '#bc34fa']
+    const colors = ['#00E5FF', '#D946EF', '#1e3a5f', '#00E5FF', '#D946EF']
     return Array.from({ length: count }, (_, i) => ({
       position: [
         (Math.random() - 0.5) * 35,
@@ -103,9 +103,9 @@ export default function FloatingGeometry({ count = 25 }) {
         <FloatingShape key={i} {...shape} />
       ))}
 
-      <HolographicRing radius={8} y={0} speed={0.08} color="#00f0ff" opacity={0.08} />
-      <HolographicRing radius={12} y={-1} speed={-0.05} color="#bc34fa" opacity={0.05} />
-      <HolographicRing radius={16} y={2} speed={0.03} color="#8b5cf6" opacity={0.03} />
+      <HolographicRing radius={8} y={0} speed={0.08} color="#00E5FF" opacity={0.08} />
+      <HolographicRing radius={12} y={-1} speed={-0.05} color="#D946EF" opacity={0.05} />
+      <HolographicRing radius={16} y={2} speed={0.03} color="#1e3a5f" opacity={0.03} />
     </group>
   )
 }

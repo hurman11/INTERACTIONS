@@ -26,7 +26,7 @@ function TerminalModel({ position, rotation = [0, 0, 0], scale = 1, isActive, on
       clonedScene.traverse((child) => {
         if (child.isMesh) {
           child.material = child.material.clone()
-          child.material.emissive = new THREE.Color(isActive ? '#00f0ff' : '#1a1a2e')
+          child.material.emissive = new THREE.Color(isActive ? '#00E5FF' : '#1a1a1a')
           child.material.emissiveIntensity = isActive ? 0.3 : 0.05
         }
       })
@@ -78,8 +78,8 @@ function ProjectHologram({ project, position, isActive }) {
       <mesh ref={frameRef}>
         <torusGeometry args={[1.2, 0.008, 16, 64]} />
         <meshStandardMaterial
-          color="#00f0ff"
-          emissive="#00f0ff"
+          color="#00E5FF"
+          emissive="#00E5FF"
           emissiveIntensity={2}
           transparent
           opacity={0}
@@ -90,8 +90,8 @@ function ProjectHologram({ project, position, isActive }) {
       <mesh scale={[2, 1.2, 1]} position={[0, 0, -0.1]}>
         <planeGeometry />
         <meshStandardMaterial
-          color="#050508"
-          emissive="#00f0ff"
+          color="#030305"
+          emissive="#00E5FF"
           emissiveIntensity={0.05}
           transparent
           opacity={0}
@@ -103,7 +103,7 @@ function ProjectHologram({ project, position, isActive }) {
         <Text
           position={[0, 0.3, 0.1]}
           fontSize={0.14}
-          color="#00f0ff"
+          color="#00E5FF"
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.2}
@@ -111,8 +111,8 @@ function ProjectHologram({ project, position, isActive }) {
         >
           {project.title}
           <meshStandardMaterial
-            color="#00f0ff"
-            emissive="#00f0ff"
+            color="#00E5FF"
+            emissive="#00E5FF"
             emissiveIntensity={1}
             transparent
             opacity={isActive ? 0.9 : 0}
@@ -125,7 +125,7 @@ function ProjectHologram({ project, position, isActive }) {
         <Text
           position={[0, -0.05, 0.1]}
           fontSize={0.055}
-          color="#f3f4f6"
+          color="#F8F9FA"
           anchorX="center"
           anchorY="middle"
           maxWidth={2}
@@ -134,7 +134,7 @@ function ProjectHologram({ project, position, isActive }) {
         >
           {project.description}
           <meshStandardMaterial
-            color="#f3f4f6"
+            color="#F8F9FA"
             transparent
             opacity={isActive ? 0.5 : 0}
           />
@@ -147,15 +147,15 @@ function ProjectHologram({ project, position, isActive }) {
             <Text
               position={[(i - (project.technologies.length - 1) / 2) * 0.6, 0, 0]}
               fontSize={0.04}
-              color="#bc34fa"
+              color="#D946EF"
               anchorX="center"
               anchorY="middle"
               font="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4e.woff2"
             >
               {tech}
               <meshStandardMaterial
-                color="#bc34fa"
-                emissive="#bc34fa"
+                color="#D946EF"
+                emissive="#D946EF"
                 emissiveIntensity={0.5}
                 transparent
                 opacity={isActive ? 0.6 : 0}
@@ -184,7 +184,7 @@ function LabTitle() {
       <Billboard>
         <Text
           fontSize={0.22}
-          color="#00f0ff"
+          color="#00E5FF"
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.3}
@@ -192,8 +192,8 @@ function LabTitle() {
         >
           THE LAB
           <meshStandardMaterial
-            color="#00f0ff"
-            emissive="#00f0ff"
+            color="#00E5FF"
+            emissive="#00E5FF"
             emissiveIntensity={0.8}
             transparent
             opacity={0.7}
@@ -206,22 +206,22 @@ function LabTitle() {
         <Text
           position={[0, -0.35, 0]}
           fontSize={0.07}
-          color="#f3f4f6"
+          color="#F8F9FA"
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.15}
           font="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4e.woff2"
         >
           PROJECT SHOWCASE
-          <meshStandardMaterial color="#f3f4f6" transparent opacity={0.25} />
+          <meshStandardMaterial color="#F8F9FA" transparent opacity={0.25} />
         </Text>
       </Billboard>
 
       <mesh position={[0, -0.55, 0]} scale={[2.5, 0.002, 1]}>
         <planeGeometry />
         <meshStandardMaterial
-          color="#00f0ff"
-          emissive="#00f0ff"
+          color="#00E5FF"
+          emissive="#00E5FF"
           emissiveIntensity={2}
           transparent
           opacity={0.12}
@@ -246,8 +246,8 @@ function LabFloorGrid() {
     <mesh ref={meshRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}>
       <planeGeometry args={[30, 30, 30, 30]} />
       <meshStandardMaterial
-        color="#00f0ff"
-        emissive="#00f0ff"
+        color="#00E5FF"
+        emissive="#00E5FF"
         emissiveIntensity={0.3}
         wireframe
         transparent
@@ -302,7 +302,7 @@ export default function Lab({ visible = true }) {
               TERMINAL_POSITIONS[i].position[1] + 1,
               TERMINAL_POSITIONS[i].position[2] + 1
             ]}
-            color={activeProject === i ? '#00f0ff' : '#1a1a2e'}
+            color={activeProject === i ? '#00E5FF' : '#1a1a1a'}
             intensity={activeProject === i ? 1 : 0.1}
             distance={6}
             decay={2}
@@ -310,9 +310,9 @@ export default function Lab({ visible = true }) {
         </group>
       ))}
 
-      <pointLight position={[0, 5, 3]} color="#00f0ff" intensity={0.5} distance={15} decay={2} />
-      <pointLight position={[-5, 1, -2]} color="#bc34fa" intensity={0.3} distance={12} decay={2} />
-      <pointLight position={[5, 2, 1]} color="#8b5cf6" intensity={0.2} distance={10} decay={2} />
+      <pointLight position={[0, 5, 3]} color="#00E5FF" intensity={0.5} distance={15} decay={2} />
+      <pointLight position={[-5, 1, -2]} color="#D946EF" intensity={0.3} distance={12} decay={2} />
+      <pointLight position={[5, 2, 1]} color="#1e3a5f" intensity={0.2} distance={10} decay={2} />
     </group>
   )
 }

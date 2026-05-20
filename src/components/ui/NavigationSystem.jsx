@@ -32,7 +32,7 @@ export default function NavigationSystem({ currentZone = 0, onNavigate }) {
               <motion.span
                 className="font-outfit text-[0.5rem] uppercase tracking-wider transition-colors duration-300 hidden group-hover:inline-block whitespace-nowrap"
                 initial={false}
-                style={{ color: isActive ? 'transparent' : isPast ? 'rgba(0, 240, 255, 0.3)' : 'rgba(243, 244, 246, 0.15)' }}
+                style={{ color: isActive ? 'transparent' : isPast ? 'rgba(255, 255, 255, 0.3)' : 'rgba(243, 244, 246, 0.15)' }}
               >
                 {!isActive && name}
               </motion.span>
@@ -44,12 +44,12 @@ export default function NavigationSystem({ currentZone = 0, onNavigate }) {
                     width: isActive ? 10 : 5,
                     height: isActive ? 10 : 5,
                     backgroundColor: isActive
-                      ? '#00f0ff'
+                      ? '#00E5FF'
                       : isPast
-                        ? 'rgba(0, 240, 255, 0.35)'
+                        ? 'rgba(255, 255, 255, 0.35)'
                         : 'rgba(243, 244, 246, 0.12)',
                     boxShadow: isActive
-                      ? '0 0 12px rgba(0, 240, 255, 0.6), 0 0 25px rgba(0, 240, 255, 0.25)'
+                      ? '0 0 12px rgba(255, 255, 255, 0.6), 0 0 25px rgba(255, 255, 255, 0.25)'
                       : '0 0 0px transparent'
                   }}
                   transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -69,7 +69,7 @@ export default function NavigationSystem({ currentZone = 0, onNavigate }) {
                 <div className="absolute right-[4px] top-full w-px h-1"
                   style={{
                     background: isPast
-                      ? 'linear-gradient(to bottom, rgba(0, 240, 255, 0.3), rgba(0, 240, 255, 0.05))'
+                      ? 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05))'
                       : 'linear-gradient(to bottom, rgba(243, 244, 246, 0.06), transparent)'
                   }}
                 />
@@ -81,7 +81,7 @@ export default function NavigationSystem({ currentZone = 0, onNavigate }) {
 
       <div className="absolute -left-2 top-0 bottom-0 w-px opacity-30"
         style={{
-          background: 'linear-gradient(to bottom, transparent, rgba(0, 240, 255, 0.2), rgba(188, 52, 250, 0.2), transparent)'
+          background: 'linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2), rgba(136, 136, 136, 0.2), transparent)'
         }}
       />
     </div>

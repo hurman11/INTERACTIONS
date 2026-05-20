@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { useEffect, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 
-export default function Fog({ color = '#050508', near = 8, far = 45 }) {
+export default function Fog({ color = '#030305', near = 8, far = 45 }) {
   const { scene } = useThree()
   const fogRef = useRef()
 

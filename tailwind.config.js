@@ -7,13 +7,16 @@ export default {
     extend: {
       colors: {
         cyber: {
-          black: "#050508",
-          charcoal: "#0a0a0f",
+          black: "#030305",
+          charcoal: "#0B0B12",
           darkGray: "#12121a",
-          cyan: "#00f0ff",
-          purple: "#bc34fa",
-          white: "#f3f4f6",
-          orange: "#ff5e00"
+          cyan: "#00E5FF",
+          purple: "#D946EF",
+          magenta: "#D946EF",
+          white: "#F8F9FA",
+          orange: "#FF3B00",
+          green: "#00FF9D",
+          slate: "#9BA3AF"
         }
       },
       fontFamily: {
@@ -22,12 +25,12 @@ export default {
         outfit: ["Outfit", "sans-serif"]
       },
       boxShadow: {
-        "glow-cyan": "0 0 15px rgba(0, 240, 255, 0.35), 0 0 40px rgba(0, 240, 255, 0.15)",
-        "glow-cyan-lg": "0 0 30px rgba(0, 240, 255, 0.5), 0 0 80px rgba(0, 240, 255, 0.2)",
-        "glow-purple": "0 0 15px rgba(188, 52, 250, 0.35), 0 0 40px rgba(188, 52, 250, 0.15)",
-        "glow-purple-lg": "0 0 30px rgba(188, 52, 250, 0.5), 0 0 80px rgba(188, 52, 250, 0.2)",
-        "glow-orange": "0 0 15px rgba(255, 94, 0, 0.35), 0 0 40px rgba(255, 94, 0, 0.15)",
-        "hud": "0 0 1px rgba(0, 240, 255, 0.6), inset 0 0 1px rgba(0, 240, 255, 0.3)"
+        "glow-cyan": "0 0 15px rgba(0, 229, 255, 0.35), 0 0 40px rgba(0, 229, 255, 0.15)",
+        "glow-cyan-lg": "0 0 30px rgba(0, 229, 255, 0.5), 0 0 80px rgba(0, 229, 255, 0.2)",
+        "glow-purple": "0 0 15px rgba(217, 70, 239, 0.35), 0 0 40px rgba(217, 70, 239, 0.15)",
+        "glow-purple-lg": "0 0 30px rgba(217, 70, 239, 0.5), 0 0 80px rgba(217, 70, 239, 0.2)",
+        "glow-orange": "0 0 15px rgba(255, 59, 0, 0.35), 0 0 40px rgba(255, 59, 0, 0.15)",
+        "hud": "0 0 1px rgba(0, 229, 255, 0.6), inset 0 0 1px rgba(0, 229, 255, 0.3)"
       },
       backdropBlur: {
         xs: "2px"
@@ -84,8 +87,8 @@ export default {
           "100%": { opacity: "1", transform: "translateX(0)" }
         },
         "glow-pulse": {
-          "0%, 100%": { boxShadow: "0 0 10px rgba(0, 240, 255, 0.3)" },
-          "50%": { boxShadow: "0 0 25px rgba(0, 240, 255, 0.6), 0 0 50px rgba(0, 240, 255, 0.2)" }
+          "0%, 100%": { boxShadow: "0 0 10px rgba(255, 255, 255, 0.3)" },
+          "50%": { boxShadow: "0 0 25px rgba(255, 255, 255, 0.6), 0 0 50px rgba(255, 255, 255, 0.2)" }
         },
         "shimmer": {
           "0%": { backgroundPosition: "-200% 0" },

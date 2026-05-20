@@ -1,10 +1,12 @@
 export const COLORS = {
-  black: "#050508",
-  charcoal: "#0a0a0f",
-  cyan: "#00f0ff",
-  purple: "#bc34fa",
-  white: "#f3f4f6",
-  orange: "#ff5e00"
+  black: "#030305",
+  charcoal: "#0B0B12",
+  cyan: "#00E5FF",
+  purple: "#D946EF",
+  magenta: "#D946EF",
+  white: "#F8F9FA",
+  orange: "#FF3B00",
+  green: "#00FF9D"
 }
 
 export const ZONES = {

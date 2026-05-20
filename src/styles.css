@@ -9,8 +9,8 @@
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    background-color: #050508;
-    color: #f3f4f6;
+    background-color: #030305;
+    color: #F8F9FA;
     font-family: "Inter", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -26,16 +26,16 @@
   }
 
   ::selection {
-    background: rgba(0, 240, 255, 0.2);
-    color: #00f0ff;
+    background: rgba(0, 229, 255, 0.2);
+    color: #00E5FF;
   }
 }
 
 @layer components {
   .hud-panel {
     position: relative;
-    background: linear-gradient(135deg, rgba(10, 10, 15, 0.85), rgba(18, 18, 26, 0.6));
-    border: 1px solid rgba(0, 240, 255, 0.12);
+    background: linear-gradient(135deg, rgba(11, 11, 18, 0.65), rgba(18, 18, 26, 0.5));
+    border: 1px solid rgba(0, 229, 255, 0.12);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: 4px;
@@ -53,19 +53,19 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(0, 240, 255, 0.4),
+      rgba(0, 229, 255, 0.4),
       transparent
     );
   }
 
   .hud-panel:hover {
-    border-color: rgba(0, 240, 255, 0.25);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.08);
+    border-color: rgba(0, 229, 255, 0.25);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.08);
   }
 
   .hud-border {
     position: relative;
-    border: 1px solid rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 229, 255, 0.1);
     border-radius: 2px;
   }
 
@@ -79,25 +79,25 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(188, 52, 250, 0.3),
+      rgba(217, 70, 239, 0.3),
       transparent
     );
   }
 
   .holo-text {
-    background: linear-gradient(135deg, #00f0ff, #bc34fa);
+    background: linear-gradient(135deg, #00E5FF, #00E5FF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.3));
+    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.3));
   }
 
   .holo-text-lg {
-    background: linear-gradient(135deg, #00f0ff 0%, #bc34fa 50%, #ff5e00 100%);
+    background: linear-gradient(135deg, #00E5FF 0%, #00E5FF 50%, #D946EF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.4));
+    filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.4));
   }
 
   .glow-line {
@@ -105,11 +105,11 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(0, 240, 255, 0.6),
-      rgba(188, 52, 250, 0.6),
+      rgba(0, 229, 255, 0.6),
+      rgba(217, 70, 239, 0.6),
       transparent
     );
-    box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
   }
 
   .glow-line-vertical {
@@ -117,11 +117,11 @@
     background: linear-gradient(
       180deg,
       transparent,
-      rgba(0, 240, 255, 0.6),
-      rgba(188, 52, 250, 0.6),
+      rgba(0, 229, 255, 0.6),
+      rgba(217, 70, 239, 0.6),
       transparent
     );
-    box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
   }
 
   .cyber-button {
@@ -135,9 +135,9 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: #00f0ff;
-    background: rgba(0, 240, 255, 0.05);
-    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: #00E5FF;
+    background: rgba(0, 229, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.3);
     border-radius: 2px;
     cursor: pointer;
     overflow: hidden;
@@ -154,16 +154,16 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(0, 240, 255, 0.1),
+      rgba(0, 229, 255, 0.1),
       transparent
     );
     transition: left 0.5s ease;
   }
 
   .cyber-button:hover {
-    background: rgba(0, 240, 255, 0.1);
-    border-color: rgba(0, 240, 255, 0.6);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2), inset 0 0 20px rgba(0, 240, 255, 0.05);
+    background: rgba(0, 229, 255, 0.1);
+    border-color: rgba(0, 229, 255, 0.6);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2), inset 0 0 20px rgba(0, 229, 255, 0.05);
   }
 
   .cyber-button:hover::before {
@@ -171,22 +171,22 @@
   }
 
   .cyber-button-purple {
-    color: #bc34fa;
-    background: rgba(188, 52, 250, 0.05);
-    border-color: rgba(188, 52, 250, 0.3);
+    color: #D946EF;
+    background: rgba(217, 70, 239, 0.05);
+    border-color: rgba(217, 70, 239, 0.3);
   }
 
   .cyber-button-purple:hover {
-    background: rgba(188, 52, 250, 0.1);
-    border-color: rgba(188, 52, 250, 0.6);
-    box-shadow: 0 0 20px rgba(188, 52, 250, 0.2), inset 0 0 20px rgba(188, 52, 250, 0.05);
+    background: rgba(217, 70, 239, 0.1);
+    border-color: rgba(217, 70, 239, 0.6);
+    box-shadow: 0 0 20px rgba(217, 70, 239, 0.2), inset 0 0 20px rgba(217, 70, 239, 0.05);
   }
 
   .cyber-button-purple::before {
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(188, 52, 250, 0.1),
+      rgba(217, 70, 239, 0.1),
       transparent
     );
   }
@@ -199,7 +199,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #050508;
+    background: #030305;
     overflow: hidden;
   }
 
@@ -209,8 +209,8 @@
     inset: 0;
     background: radial-gradient(
       ellipse at center,
-      rgba(188, 52, 250, 0.06) 0%,
-      rgba(0, 240, 255, 0.03) 30%,
+      rgba(217, 70, 239, 0.06) 0%,
+      rgba(0, 229, 255, 0.03) 30%,
       transparent 70%
     );
     pointer-events: none;
@@ -220,8 +220,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 240, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 240, 255, 0.015) 1px, transparent 1px);
+      linear-gradient(rgba(0, 229, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.015) 1px, transparent 1px);
     background-size: 60px 60px;
     pointer-events: none;
     mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
@@ -232,7 +232,7 @@
     position: relative;
     width: 280px;
     height: 2px;
-    background: rgba(0, 240, 255, 0.08);
+    background: rgba(0, 229, 255, 0.08);
     border-radius: 1px;
     overflow: hidden;
   }
@@ -242,9 +242,9 @@
     top: 0;
     left: 0;
     height: 100%;
-    background: linear-gradient(90deg, #00f0ff, #bc34fa);
+    background: linear-gradient(90deg, #00E5FF, #D946EF);
     border-radius: 1px;
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
     transition: width 0.15s ease-out;
   }
 
@@ -252,7 +252,7 @@
     font-family: "Outfit", sans-serif;
     font-size: 0.65rem;
     letter-spacing: 0.08em;
-    color: rgba(0, 240, 255, 0.5);
+    color: rgba(248, 249, 250, 0.5);
     text-transform: uppercase;
   }
 
@@ -264,8 +264,8 @@
       0deg,
       transparent,
       transparent 2px,
-      rgba(0, 240, 255, 0.008) 2px,
-      rgba(0, 240, 255, 0.008) 4px
+      rgba(0, 229, 255, 0.008) 2px,
+      rgba(0, 229, 255, 0.008) 4px
     );
     z-index: 90;
   }
@@ -274,7 +274,7 @@
     position: absolute;
     width: 12px;
     height: 12px;
-    border-color: rgba(0, 240, 255, 0.25);
+    border-color: rgba(0, 229, 255, 0.25);
     border-style: solid;
     border-width: 0;
   }
@@ -310,35 +310,35 @@
 
 @layer utilities {
   .text-glow-cyan {
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 30px rgba(0, 240, 255, 0.2);
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5), 0 0 30px rgba(0, 229, 255, 0.2);
   }
 
   .text-glow-purple {
-    text-shadow: 0 0 10px rgba(188, 52, 250, 0.5), 0 0 30px rgba(188, 52, 250, 0.2);
+    text-shadow: 0 0 10px rgba(217, 70, 239, 0.5), 0 0 30px rgba(217, 70, 239, 0.2);
   }
 
   .text-glow-orange {
-    text-shadow: 0 0 10px rgba(255, 94, 0, 0.5), 0 0 30px rgba(255, 94, 0, 0.2);
+    text-shadow: 0 0 10px rgba(255, 59, 0, 0.5), 0 0 30px rgba(255, 59, 0, 0.2);
   }
 
   .bg-grid {
     background-image:
-      linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
   .bg-grid-dense {
     background-image:
-      linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+      linear-gradient(rgba(0, 229, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.02) 1px, transparent 1px);
     background-size: 20px 20px;
   }
 
   .bg-radial-glow {
     background: radial-gradient(
       circle at center,
-      rgba(0, 240, 255, 0.06) 0%,
+      rgba(0, 229, 255, 0.06) 0%,
       transparent 60%
     );
   }
@@ -346,7 +346,7 @@
   .bg-radial-purple {
     background: radial-gradient(
       circle at center,
-      rgba(188, 52, 250, 0.06) 0%,
+      rgba(217, 70, 239, 0.06) 0%,
       transparent 60%
     );
   }
@@ -359,5 +359,60 @@
   .mask-fade-bottom {
     mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  .cyber-button-purple {
+    border-color: rgba(217, 70, 239, 0.25) !important;
+    background: rgba(217, 70, 239, 0.06) !important;
+    color: rgba(217, 70, 239, 0.7) !important;
+  }
+
+  .cyber-button-purple:hover {
+    border-color: rgba(217, 70, 239, 0.5) !important;
+    background: rgba(217, 70, 239, 0.12) !important;
+    color: rgba(217, 70, 239, 0.9) !important;
+    box-shadow: 0 0 15px rgba(217, 70, 239, 0.15),
+                inset 0 0 15px rgba(217, 70, 239, 0.05) !important;
+  }
+
+  .zone-flash {
+    animation: zoneFlash 0.6s ease-out forwards;
+  }
+
+  @keyframes zoneFlash {
+    0% {
+      opacity: 0.15;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes depthPulse {
+    0%, 100% { opacity: 0.08; }
+    50% { opacity: 0.15; }
+  }
+
+  .depth-pulse {
+    animation: depthPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes dataStream {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  .data-stream {
+    animation: dataStream 8s linear infinite;
+  }
+
+  /* Premium cursor glow on canvas */
+  canvas {
+    cursor: crosshair;
+  }
+
+  /* Smooth transition for zone changes */
+  .zone-transition {
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 }

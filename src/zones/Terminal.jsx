@@ -1,175 +1,245 @@
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { useGLTF, Text, Billboard, Float } from '@react-three/drei'
+import { Text, Billboard, Float, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 
-function TransceiverBeam() {
-  const beamRef = useRef()
-
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime()
-    if (beamRef.current) {
-      beamRef.current.rotation.y = t * 0.2
-      // Pulsing volumetric opacity
-      beamRef.current.material.opacity = 0.14 + Math.sin(t * 2.5) * 0.04
-    }
-  })
-
-  return (
-    <mesh ref={beamRef} position={[0, 8, 0]}>
-      {/* Volumetric cylinder geometry: topRad, bottomRad, height, radialSegments, heightSegments, openEnded */}
-      <cylinderGeometry args={[0.2, 1.4, 20, 16, 1, true]} />
-      <meshBasicMaterial
-        color="#bc34fa"
-        transparent
-        opacity={0.15}
-        side={THREE.DoubleSide}
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
-    </mesh>
-  )
-}
-
-function TerminalTitle() {
-  const groupRef = useRef()
-
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime()
-    if (groupRef.current) {
-      groupRef.current.position.y = 4.8 + Math.sin(t * 0.18) * 0.08
-    }
-  })
-
-  return (
-    <group ref={groupRef} position={[0, 4.8, 0]}>
-      <Billboard>
-        <Text
-          fontSize={0.22}
-          color="#bc34fa"
-          anchorX="center"
-          anchorY="middle"
-          letterSpacing={0.3}
-          font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dy0.woff2"
-        >
-          CORE TRANSCEIVER
-          <meshStandardMaterial
-            color="#bc34fa"
-            emissive="#bc34fa"
-            emissiveIntensity={0.8}
-            transparent
-            opacity={0.7}
-            toneMapped={false}
-          />
-        </Text>
-      </Billboard>
-
-      <Billboard>
-        <Text
-          position={[0, -0.35, 0]}
-          fontSize={0.07}
-          color="#f3f4f6"
-          anchorX="center"
-          anchorY="middle"
-          letterSpacing={0.15}
-          font="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4e.woff2"
-        >
-          BROADCAST TRANSMISSION BUFFER
-          <meshStandardMaterial color="#f3f4f6" transparent opacity={0.25} />
-        </Text>
-      </Billboard>
-
-      <mesh position={[0, -0.55, 0]} scale={[2.5, 0.002, 1]}>
-        <planeGeometry />
-        <meshStandardMaterial
-          color="#bc34fa"
-          emissive="#bc34fa"
-          emissiveIntensity={2}
-          transparent
-          opacity={0.12}
-          toneMapped={false}
-        />
-      </mesh>
-    </group>
-  )
-}
-
-export default function Terminal({ visible = true }) {
+function CentralTerminal() {
   const { scene } = useGLTF('/assets/futuristic_free-standing_terminal.glb')
-  
-  // Clone scene so we can modify its materials safely
+  const modelRef = useRef()
   const clonedScene = useMemo(() => {
-    if (!scene) return null
     const clone = scene.clone(true)
     clone.traverse((child) => {
       if (child.isMesh) {
         child.material = child.material.clone()
-        // Color the physical console to glow purple to match the transmission theme
-        child.material.emissive = new THREE.Color('#bc34fa')
-        child.material.emissiveIntensity = 0.3
+        child.material.emissive = new THREE.Color('#00E5FF')
+        child.material.emissiveIntensity = 0.15
       }
     })
     return clone
   }, [scene])
 
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    if (modelRef.current) {
+      modelRef.current.position.y = -0.5 + Math.sin(t * 0.3) * 0.08
+    }
+  })
+
+  return (
+    <Float speed={0.6} rotationIntensity={0.01} floatIntensity={0.1}>
+      <group ref={modelRef} position={[0, -0.5, 0]} scale={1.2}>
+        <primitive object={clonedScene} />
+      </group>
+    </Float>
+  )
+}
+
+function TerminalTitle() {
+  const ref = useRef()
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    if (ref.current) ref.current.position.y = 5 + Math.sin(t * 0.25) * 0.1
+  })
+
+  return (
+    <group ref={ref} position={[0, 5, 0]}>
+      <Billboard>
+        <Text
+          fontSize={0.22}
+          color="#00E5FF"
+          anchorX="center"
+          anchorY="middle"
+          letterSpacing={0.3}
+          font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dy0.woff2"
+        >
+          THE TERMINAL
+          <meshStandardMaterial color="#00E5FF" emissive="#00E5FF" emissiveIntensity={0.8} transparent opacity={0.7} toneMapped={false} />
+        </Text>
+      </Billboard>
+      <Billboard>
+        <Text
+          position={[0, -0.35, 0]}
+          fontSize={0.07}
+          color="#F8F9FA"
+          anchorX="center"
+          anchorY="middle"
+          letterSpacing={0.15}
+          font="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4e.woff2"
+        >
+          INITIATE CONTACT
+          <meshStandardMaterial color="#F8F9FA" transparent opacity={0.25} />
+        </Text>
+      </Billboard>
+      <mesh position={[0, -0.55, 0]} scale={[3, 0.002, 1]}>
+        <planeGeometry />
+        <meshStandardMaterial color="#00E5FF" emissive="#00E5FF" emissiveIntensity={2} transparent opacity={0.12} toneMapped={false} />
+      </mesh>
+    </group>
+  )
+}
+
+function HolographicScreen() {
+  const meshRef = useRef()
+  const frameRef = useRef()
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    if (meshRef.current) {
+      meshRef.current.material.opacity = 0.04 + Math.sin(t * 0.5) * 0.015
+    }
+    if (frameRef.current) {
+      frameRef.current.material.opacity = 0.15 + Math.sin(t * 0.8) * 0.05
+    }
+  })
+
+  return (
+    <group position={[0, 2.2, -0.5]}>
+      <mesh ref={meshRef} scale={[3.5, 2, 1]}>
+        <planeGeometry />
+        <meshStandardMaterial
+          color="#00E5FF"
+          emissive="#00E5FF"
+          emissiveIntensity={0.1}
+          transparent
+          opacity={0.04}
+          side={THREE.DoubleSide}
+          toneMapped={false}
+        />
+      </mesh>
+
+      <mesh ref={frameRef} scale={[3.6, 2.1, 1]}>
+        <planeGeometry />
+        <meshStandardMaterial
+          color="#00E5FF"
+          emissive="#00E5FF"
+          emissiveIntensity={1}
+          transparent
+          opacity={0.15}
+          wireframe
+          side={THREE.DoubleSide}
+          toneMapped={false}
+        />
+      </mesh>
+
+      <Billboard>
+        <Text
+          position={[0, 0.6, 0.1]}
+          fontSize={0.12}
+          color="#00E5FF"
+          anchorX="center"
+          anchorY="middle"
+          letterSpacing={0.25}
+          font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dy0.woff2"
+        >
+          READY TO CONNECT?
+          <meshStandardMaterial color="#00E5FF" emissive="#00E5FF" emissiveIntensity={1} transparent opacity={0.7} toneMapped={false} />
+        </Text>
+      </Billboard>
+
+      <Billboard>
+        <Text
+          position={[0, 0.2, 0.1]}
+          fontSize={0.055}
+          color="#F8F9FA"
+          anchorX="center"
+          anchorY="middle"
+          maxWidth={3}
+          lineHeight={1.5}
+          font="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4e.woff2"
+        >
+          We build digital experiences that push boundaries. If you've got a vision, we've got the firepower.
+          <meshStandardMaterial color="#F8F9FA" transparent opacity={0.35} />
+        </Text>
+      </Billboard>
+
+      <Billboard>
+        <Text
+          position={[0, -0.4, 0.1]}
+          fontSize={0.04}
+          color="#D946EF"
+          anchorX="center"
+          anchorY="middle"
+          letterSpacing={0.2}
+          font="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4e.woff2"
+        >
+          ▼  USE THE PANEL BELOW TO REACH US  ▼
+          <meshStandardMaterial color="#D946EF" emissive="#D946EF" emissiveIntensity={0.5} transparent opacity={0.4} toneMapped={false} />
+        </Text>
+      </Billboard>
+    </group>
+  )
+}
+
+function TerminalParticles() {
+  const pointsRef = useRef()
+  const count = 120
+
+  const positions = useMemo(() => {
+    const pos = new Float32Array(count * 3)
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * 12
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 8
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 8
+    }
+    return pos
+  }, [])
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    if (pointsRef.current) {
+      pointsRef.current.rotation.y = t * 0.015
+      const posAttr = pointsRef.current.geometry.attributes.position
+      for (let i = 0; i < count; i++) {
+        posAttr.array[i * 3 + 1] += Math.sin(t * 0.3 + i * 0.5) * 0.0008
+      }
+      posAttr.needsUpdate = true
+    }
+  })
+
+  return (
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+      </bufferGeometry>
+      <pointsMaterial size={0.03} color="#D946EF" transparent opacity={0.3} sizeAttenuation depthWrite={false} blending={THREE.AdditiveBlending} />
+    </points>
+  )
+}
+
+function FloorGrid() {
+  const ref = useRef()
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    if (ref.current) {
+      ref.current.material.opacity = 0.025 + Math.sin(t * 0.3) * 0.01
+    }
+  })
+
+  return (
+    <mesh ref={ref} rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.5, 0]}>
+      <planeGeometry args={[20, 20, 20, 20]} />
+      <meshStandardMaterial color="#D946EF" emissive="#D946EF" emissiveIntensity={0.3} wireframe transparent opacity={0.025} toneMapped={false} />
+    </mesh>
+  )
+}
+
+export default function Terminal({ visible = true }) {
   if (!visible) return null
 
   return (
     <group position={[0, 0, -75]}>
       <TerminalTitle />
-      
-      {/* Transceiver Beam shooting into space */}
-      <TransceiverBeam />
+      <CentralTerminal />
+      <HolographicScreen />
+      <TerminalParticles />
+      <FloorGrid />
 
-      {/* Terminal Console */}
-      <Float speed={1.2} rotationIntensity={0.02} floatIntensity={0.08}>
-        <group position={[0, -0.5, 0]} scale={1.05}>
-          {clonedScene && <primitive object={clonedScene} />}
-        </group>
-      </Float>
-
-      {/* Holographic screen UI hovering directly above console */}
-      <Billboard position={[0, 1.8, 0]}>
-        <Text
-          fontSize={0.06}
-          color="#bc34fa"
-          anchorX="center"
-          anchorY="middle"
-          letterSpacing={0.1}
-          font="https://fonts.gstatic.com/s/orbitron/v31/yMJRMIlzdpvBhQQL_Qq7dy0.woff2"
-        >
-          SYSTEM STATUS: READY TO TRANSMIT
-          <meshStandardMaterial
-            color="#bc34fa"
-            emissive="#bc34fa"
-            emissiveIntensity={0.8}
-            transparent
-            opacity={0.8}
-            toneMapped={false}
-          />
-        </Text>
-      </Billboard>
-
-      <Billboard position={[0, 1.6, 0]}>
-        <Text
-          fontSize={0.035}
-          color="#f3f4f6"
-          anchorX="center"
-          anchorY="middle"
-          letterSpacing={0.05}
-          font="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4e.woff2"
-        >
-          AWAITING INBOUND CONNECTIONS...
-          <meshStandardMaterial color="#f3f4f6" transparent opacity={0.3} />
-        </Text>
-      </Billboard>
-
-      {/* Pulsing light behind console */}
-      <pointLight position={[0, 1.5, 0.5]} color="#bc34fa" intensity={1.5} distance={8} decay={2} />
-      <pointLight position={[-3, 3, 2]} color="#00f0ff" intensity={0.4} distance={10} decay={2} />
-      <pointLight position={[3, 1, -2]} color="#bc34fa" intensity={0.3} distance={10} decay={2} />
+      <pointLight position={[0, 4, 3]} color="#00E5FF" intensity={0.6} distance={12} decay={2} />
+      <pointLight position={[-3, 1, 2]} color="#D946EF" intensity={0.5} distance={10} decay={2} />
+      <pointLight position={[3, 2, -1]} color="#1e3a5f" intensity={0.3} distance={10} decay={2} />
+      <pointLight position={[0, -1, 2]} color="#00E5FF" intensity={0.2} distance={6} decay={2} />
     </group>
   )
 }
-
-useGLTF.preload('/assets/futuristic_free-standing_terminal.glb')

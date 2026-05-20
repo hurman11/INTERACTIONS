@@ -1,7 +1,6 @@
 import { useState, useCallback, useRef, Suspense, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Stars } from '@react-three/drei'
-import { useMotionValue } from 'framer-motion'
 import LoadingScreen from '@/components/ui/LoadingScreen'
 import HUD from '@/components/ui/HUD'
 import NavigationSystem from '@/components/ui/NavigationSystem'
@@ -11,10 +10,11 @@ import ContactTerminal from '@/components/ui/ContactTerminal'
 import Environment from '@/components/3d/Environment'
 import Particles from '@/components/3d/Particles'
 import FloatingGeometry from '@/components/3d/FloatingGeometry'
-import Walkway from '@/components/3d/Walkway'
 import CameraRig from '@/components/3d/CameraRig'
 import PostFX from '@/components/effects/PostFX'
+import ZoneTransitionFX from '@/components/effects/ZoneTransitionFX'
 import Fog from '@/components/effects/Fog'
+import GroundPlane from '@/components/3d/GroundPlane'
 import Gateway from '@/zones/Gateway'
 import Core from '@/zones/Core'
 import Lab from '@/zones/Lab'
@@ -24,12 +24,11 @@ import Terminal from '@/zones/Terminal'
 import useDeviceDetect from '@/hooks/useDeviceDetect'
 import useWorldProgress from '@/hooks/useWorldProgress'
 
-function Scene({ capabilities, scrollRef, activeMember, setActiveMember }) {
+function Scene({ capabilities, scrollProgress }) {
   return (
     <>
-      <CameraRig scrollRef={scrollRef}>
+      <CameraRig scrollProgress={scrollProgress}>
         <Environment enableHDRI={!capabilities.isLowEnd} />
-        <Walkway />
         <Particles
           count={capabilities.particleCount}
           enableNeural={!capabilities.isLowEnd}
@@ -39,9 +38,10 @@ function Scene({ capabilities, scrollRef, activeMember, setActiveMember }) {
         <Gateway />
         <Core />
         <Lab />
-        <Team activeMember={activeMember} onSelectMember={setActiveMember} />
+        <Team />
         <Network />
         <Terminal />
+        {!capabilities.isLowEnd && <GroundPlane scrollProgress={scrollProgress} />}
       </CameraRig>
 
       <Stars
@@ -57,20 +57,20 @@ function Scene({ capabilities, scrollRef, activeMember, setActiveMember }) {
       <Fog />
 
       {capabilities.enablePostProcessing && (
-        <PostFX scrollRef={scrollRef} bloomIntensity={0.8} />
+        <PostFX bloomIntensity={0.8} />
       )}
+
+      <ZoneTransitionFX scrollProgress={scrollProgress} />
     </>
   )
 }
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
+  const [scrollProgress, setScrollProgress] = useState(0)
   const [activeProject, setActiveProject] = useState(1)
-  const [activeMember, setActiveMember] = useState(0)
   const capabilities = useDeviceDetect()
   const world = useWorldProgress()
-
-  const scrollMotionValue = useMotionValue(0)
 
   const scrollTarget = useRef(0)
   const scrollCurrent = useRef(0)
@@ -94,8 +94,10 @@ function App() {
     function animate() {
       scrollCurrent.current += (scrollTarget.current - scrollCurrent.current) * 0.08
 
-      scrollMotionValue.set(scrollCurrent.current)
-      world.update(scrollCurrent.current)
+      if (Math.abs(scrollTarget.current - scrollCurrent.current) > 0.00001) {
+        setScrollProgress(scrollCurrent.current)
+        world.update(scrollCurrent.current)
+      }
 
       raf = requestAnimationFrame(animate)
     }
@@ -141,10 +143,6 @@ function App() {
     setActiveProject(index)
   }, [])
 
-  const handleMemberNavigate = useCallback((index) => {
-    setActiveMember(index)
-  }, [])
-
   return (
     <div className="relative w-full h-screen bg-cyber-black text-cyber-white select-none overflow-hidden">
       {isLoading && <LoadingScreen onComplete={handleLoadComplete} />}
@@ -160,15 +158,13 @@ function App() {
             stencil: false,
             depth: true
           }}
-          style={{ background: '#050508' }}
+          style={{ background: '#030305' }}
         >
-          <color attach="background" args={['#050508']} />
+          <color attach="background" args={['#030305']} />
           <Suspense fallback={null}>
             <Scene
               capabilities={capabilities}
-              scrollRef={scrollCurrent}
-              activeMember={activeMember}
-              setActiveMember={setActiveMember}
+              scrollProgress={scrollProgress}
             />
           </Suspense>
         </Canvas>
@@ -176,21 +172,15 @@ function App() {
 
       {!isLoading && (
         <>
-          <HUD currentZone={world.currentZone} scrollMotion={scrollMotionValue} />
+          <HUD currentZone={world.currentZone} scrollProgress={scrollProgress} />
           <NavigationSystem currentZone={world.currentZone} onNavigate={handleNavigate} />
           <ProjectTerminal
             activeProject={activeProject}
             onNavigate={handleProjectNavigate}
             currentZone={world.currentZone}
           />
-          <TeamProfiles
-            activeMember={activeMember}
-            onNavigate={handleMemberNavigate}
-            currentZone={world.currentZone}
-          />
-          <ContactTerminal
-            currentZone={world.currentZone}
-          />
+          <TeamProfiles currentZone={world.currentZone} />
+          <ContactTerminal currentZone={world.currentZone} />
           <div className="scanline-overlay opacity-20 fixed inset-0 pointer-events-none z-50" />
         </>
       )}

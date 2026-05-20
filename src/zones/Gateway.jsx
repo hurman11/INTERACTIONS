@@ -22,7 +22,7 @@ function GatewayLogo() {
       <Text
         fontSize={1.6}
         letterSpacing={0.12}
-        color="#00f0ff"
+        color="#00E5FF"
         anchorX="center"
         anchorY="middle"
         maxWidth={20}
@@ -30,8 +30,8 @@ function GatewayLogo() {
       >
         INTERACTIONS
         <meshStandardMaterial
-          color="#00f0ff"
-          emissive="#00f0ff"
+          color="#00E5FF"
+          emissive="#00E5FF"
           emissiveIntensity={1.2}
           transparent
           opacity={0.95}
@@ -43,7 +43,7 @@ function GatewayLogo() {
         position={[0, -1.3, 0]}
         fontSize={0.13}
         letterSpacing={0.25}
-        color="#f3f4f6"
+        color="#F8F9FA"
         anchorX="center"
         anchorY="middle"
         maxWidth={12}
@@ -51,7 +51,7 @@ function GatewayLogo() {
       >
         WE DON'T BUILD WEBSITES. WE BUILD DIGITAL EXPERIENCES.
         <meshStandardMaterial
-          color="#f3f4f6"
+          color="#F8F9FA"
           transparent
           opacity={0.35}
         />
@@ -60,8 +60,8 @@ function GatewayLogo() {
       <mesh ref={glowRef} position={[0, 0, -1]} scale={[12, 4, 1]}>
         <planeGeometry />
         <meshStandardMaterial
-          color="#00f0ff"
-          emissive="#00f0ff"
+          color="#00E5FF"
+          emissive="#00E5FF"
           emissiveIntensity={0.5}
           transparent
           opacity={0.06}
@@ -77,9 +77,9 @@ function GatewayRings() {
   const ringsRef = useRef([])
 
   const ringConfigs = useMemo(() => [
-    { radius: 4, tube: 0.008, speed: 0.12, color: '#00f0ff', opacity: 0.15, tiltX: Math.PI / 2 },
-    { radius: 5.5, tube: 0.006, speed: -0.08, color: '#bc34fa', opacity: 0.1, tiltX: Math.PI / 2.2 },
-    { radius: 7, tube: 0.005, speed: 0.05, color: '#8b5cf6', opacity: 0.06, tiltX: Math.PI / 1.9 },
+    { radius: 4, tube: 0.008, speed: 0.12, color: '#00E5FF', opacity: 0.15, tiltX: Math.PI / 2 },
+    { radius: 5.5, tube: 0.006, speed: -0.08, color: '#D946EF', opacity: 0.1, tiltX: Math.PI / 2.2 },
+    { radius: 7, tube: 0.005, speed: 0.05, color: '#1e3a5f', opacity: 0.06, tiltX: Math.PI / 1.9 },
   ], [])
 
   useFrame((state) => {
@@ -153,7 +153,7 @@ function GatewayParticleField() {
       </bufferGeometry>
       <pointsMaterial
         size={0.04}
-        color="#00f0ff"
+        color="#00E5FF"
         transparent
         opacity={0.4}
         sizeAttenuation
@@ -179,8 +179,8 @@ function TaglineBar() {
       <mesh ref={ref} scale={[6, 0.003, 1]}>
         <planeGeometry />
         <meshStandardMaterial
-          color="#00f0ff"
-          emissive="#00f0ff"
+          color="#00E5FF"
+          emissive="#00E5FF"
           emissiveIntensity={2}
           transparent
           opacity={0.12}
@@ -209,8 +209,8 @@ function ScrollCue() {
       <mesh rotation={[0, 0, Math.PI / 4]} scale={0.1}>
         <planeGeometry args={[1, 1]} />
         <meshStandardMaterial
-          color="#00f0ff"
-          emissive="#00f0ff"
+          color="#00E5FF"
+          emissive="#00E5FF"
           emissiveIntensity={2}
           transparent
           opacity={0.2}
@@ -221,8 +221,8 @@ function ScrollCue() {
       <mesh rotation={[0, 0, Math.PI / 4]} scale={0.07} position={[0, -0.2, 0]}>
         <planeGeometry args={[1, 1]} />
         <meshStandardMaterial
-          color="#00f0ff"
-          emissive="#00f0ff"
+          color="#00E5FF"
+          emissive="#00E5FF"
           emissiveIntensity={2}
           transparent
           opacity={0.12}
@@ -247,8 +247,8 @@ export default function Gateway({ visible = true }) {
       <TaglineBar />
       <ScrollCue />
 
-      <pointLight position={[0, 3, 5]} color="#00f0ff" intensity={0.8} distance={15} decay={2} />
-      <pointLight position={[0, -2, 3]} color="#bc34fa" intensity={0.4} distance={12} decay={2} />
+      <pointLight position={[0, 3, 5]} color="#00E5FF" intensity={0.8} distance={15} decay={2} />
+      <pointLight position={[0, -2, 3]} color="#D946EF" intensity={0.4} distance={12} decay={2} />
     </group>
   )
 }

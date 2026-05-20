@@ -4,12 +4,12 @@ import { Text, Billboard } from '@react-three/drei'
 import * as THREE from 'three'
 
 const SERVICES = [
-  { id: 'web', label: 'WEB DEV', icon: 'octahedron', color: '#00f0ff', description: 'Full-stack web applications' },
-  { id: 'ai', label: 'AI', icon: 'tetrahedron', color: '#bc34fa', description: 'Machine learning systems' },
-  { id: 'cyber', label: 'SECURITY', icon: 'icosahedron', color: '#ff5e00', description: 'Cybersecurity solutions' },
-  { id: 'uiux', label: 'UI/UX', icon: 'dodecahedron', color: '#00f0ff', description: 'Interface design & motion' },
-  { id: 'mobile', label: 'MOBILE', icon: 'box', color: '#bc34fa', description: 'Cross-platform mobile apps' },
-  { id: 'auto', label: 'AUTOMATION', icon: 'torus', color: '#8b5cf6', description: 'Workflow automation tools' },
+  { id: 'web', label: 'WEB DEV', icon: 'octahedron', color: '#00E5FF', description: 'Full-stack web applications' },
+  { id: 'ai', label: 'AI', icon: 'tetrahedron', color: '#D946EF', description: 'Machine learning systems' },
+  { id: 'cyber', label: 'SECURITY', icon: 'icosahedron', color: '#FF3B00', description: 'Cybersecurity solutions' },
+  { id: 'uiux', label: 'UI/UX', icon: 'dodecahedron', color: '#00E5FF', description: 'Interface design & motion' },
+  { id: 'mobile', label: 'MOBILE', icon: 'box', color: '#D946EF', description: 'Cross-platform mobile apps' },
+  { id: 'auto', label: 'AUTOMATION', icon: 'torus', color: '#1e3a5f', description: 'Workflow automation tools' },
 ]
 
 function NodeGeometry({ type, color }) {
@@ -103,13 +103,13 @@ function ServiceNode({ service, angle, radius, index, hoveredNode, onHover }) {
           <Text
             position={[0, -0.45, 0]}
             fontSize={0.065}
-            color="#f3f4f6"
+            color="#F8F9FA"
             anchorX="center"
             anchorY="top"
             font="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4e.woff2"
           >
             {service.description}
-            <meshStandardMaterial color="#f3f4f6" transparent opacity={0.5} />
+            <meshStandardMaterial color="#F8F9FA" transparent opacity={0.5} />
           </Text>
         </Billboard>
       )}

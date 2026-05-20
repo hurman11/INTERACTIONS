@@ -19,8 +19,8 @@ function InnerSphere() {
     <mesh ref={meshRef}>
       <icosahedronGeometry args={[1.2, 1]} />
       <meshStandardMaterial
-        color="#00f0ff"
-        emissive="#00f0ff"
+        color="#00E5FF"
+        emissive="#00E5FF"
         emissiveIntensity={0.8}
         wireframe
         transparent
@@ -48,8 +48,8 @@ function OuterSphere() {
     <mesh ref={meshRef}>
       <icosahedronGeometry args={[1.8, 2]} />
       <meshStandardMaterial
-        color="#bc34fa"
-        emissive="#bc34fa"
+        color="#D946EF"
+        emissive="#D946EF"
         emissiveIntensity={0.4}
         wireframe
         transparent
@@ -76,8 +76,8 @@ function EnergyCore() {
     <mesh ref={meshRef}>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial
-        color="#00f0ff"
-        emissive="#00f0ff"
+        color="#00E5FF"
+        emissive="#00E5FF"
         emissiveIntensity={2}
         transparent
         opacity={0.6}
@@ -91,9 +91,9 @@ function OrbitalRings() {
   const ringsRef = useRef([])
 
   const configs = useMemo(() => [
-    { radius: 2.2, tube: 0.01, rotX: Math.PI / 2, speed: 0.3, color: '#00f0ff' },
-    { radius: 2.5, tube: 0.008, rotX: Math.PI / 2.5, speed: -0.2, color: '#bc34fa' },
-    { radius: 2.8, tube: 0.006, rotX: Math.PI / 1.8, speed: 0.15, color: '#8b5cf6' },
+    { radius: 2.2, tube: 0.01, rotX: Math.PI / 2, speed: 0.3, color: '#00E5FF' },
+    { radius: 2.5, tube: 0.008, rotX: Math.PI / 2.5, speed: -0.2, color: '#D946EF' },
+    { radius: 2.8, tube: 0.006, rotX: Math.PI / 1.8, speed: 0.15, color: '#1e3a5f' },
   ], [])
 
   useFrame((state) => {
@@ -155,8 +155,8 @@ function DataStreams() {
           <mesh key={i} position={[x, 0, z]} rotation={[0, -line.angle, Math.PI / 2]} scale={[0.005, line.length, 0.005]}>
             <boxGeometry />
             <meshStandardMaterial
-              color="#00f0ff"
-              emissive="#00f0ff"
+              color="#00E5FF"
+              emissive="#00E5FF"
               emissiveIntensity={1.5}
               transparent
               opacity={0.15}
@@ -187,7 +187,7 @@ export default function CoreSphere({ position = [0, 1, 0] }) {
       <OrbitalRings />
       <DataStreams />
 
-      <pointLight position={[0, 0, 0]} color="#00f0ff" intensity={1.5} distance={8} decay={2} />
+      <pointLight position={[0, 0, 0]} color="#00E5FF" intensity={1.5} distance={8} decay={2} />
     </group>
   )
 }

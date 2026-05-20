@@ -136,7 +136,7 @@ export default function Particles({ count = 500, enableNeural = true }) {
         count={Math.floor(count * 0.6)}
         spread={35}
         size={0.04}
-        color="#00f0ff"
+        color="#00E5FF"
         speed={0.3}
         opacity={0.5}
         drift={0.008}
@@ -146,7 +146,7 @@ export default function Particles({ count = 500, enableNeural = true }) {
         count={Math.floor(count * 0.3)}
         spread={40}
         size={0.06}
-        color="#bc34fa"
+        color="#D946EF"
         speed={0.2}
         opacity={0.35}
         drift={0.005}
@@ -156,7 +156,7 @@ export default function Particles({ count = 500, enableNeural = true }) {
         count={Math.floor(count * 0.1)}
         spread={30}
         size={0.1}
-        color="#ffffff"
+        color="#00E5FF"
         speed={0.15}
         opacity={0.2}
         drift={0.003}

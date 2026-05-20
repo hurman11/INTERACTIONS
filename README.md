@@ -1,57 +1,59 @@
-THE DIGITAL CIVILIZATION OF INTERACTIONS
-========================================
+<div align="center">
+  <img src="https://img.shields.io/badge/STATUS-SYSTEM%20ONLINE-00E5FF?style=for-the-badge&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/SECTOR-CORE%20HQ-D946EF?style=for-the-badge&logo=threedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/ACCESS-OPEN-FF3B00?style=for-the-badge" />
+</div>
 
-In the vast, quiet expanse of the internet, a few young minds gathered to build something different. Not another landing page, not another corporate template. They wanted to build a virtual space that felt alive, like stepping into a futuristic digital civilization. They called it Interactions.
+<br />
 
-This is the story of how they created it, and the architecture that holds this virtual world together.
+INTERACTIONS — Digital Civilization
 
+"They told us we were too young to build the future. So we decided to build our own reality instead."
 
-THE STAGE AND THE PATH
-======================
+Welcome to the central node. 
 
-As you enter this domain, the first thing you see is a dark, endless void. But you are not lost. Beneath you, a glowing metallic walkway constructed from heavy industrial floor plates stretches forward, disappearing into the distant fog. Animated neon guide rails in bright cyan and purple run along the edges, pulsing gently like electrical veins, guiding your journey deeper.
+If you're reading this, you've found INTERACTIONS. We aren't a corporate tech agency, and this isn't a startup landing page. We are a collective of teenage developers, designers, and digital architects. We don't just write code; we forge digital environments. 
 
+What you're looking at isn't a website—it's a living, breathing 3D civilization built on the edge of the modern web. We took the standard rules of web development, tore them down, and built a fully immersive, cinematic world where scrolling doesn't just move a page—it pulls you deeper into our network.
 
-THE SECTOR TRAVEL
-=================
+This repository holds the source code to our headquarters.
 
-Your path takes you through distinct sectors, each serving a unique purpose in this virtual civilization:
+THE ARCHITECTURE OF OUR WORLD
 
-Sector 1: The Gateway
-Here, the giant three-dimensional logo of Interactions floats in space, drifting gently as if suspended in zero gravity. It is the outer threshold, welcoming travelers with pulsing diamond cues that invite you to scroll forward into the core.
+To build a digital civilization, you need the right tools. Here is what powers our infrastructure:
 
-Sector 2: The Interaction Core
-Deep in the second sector lies the pulsating neural core of their services. A complex holographic sphere made of wireframe inner and outer shapes rotates in a counter-balancing pattern, surrounded by orbiting data nodes. Each node represents a discipline, lighting up and revealing its core when hovered.
+- The Engine: React + Vite
+- The Dimension: React Three Fiber (@react-three/fiber) & Drei
+- The Physics: Custom Virtual Scroll System (Math + requestAnimationFrame)
+- The Motion: Framer Motion
+- The Atmosphere: @react-three/postprocessing (Bloom, Chromatic Aberration, Noise)
+- The Construct: Tailwind CSS
 
-Sector 3: The Lab
-Next, you arrive at the project showcase. Three physical terminal consoles stand in a curved arc upon the walkway. Above each console floats a holographic billboard displaying live projects, technology stacks, and active links, allowing visitors to inspect their digital creations.
+NAVIGATING THE SECTORS
 
-Sector 4: The Syndicate
-Here, the creators themselves are represented by geometric relics. Arthur is a rotating cyan wireframe octahedron. Tessia is a pulsating purple wireframe torus ring. Elijah is an emissive orange dodecahedron. Hovering near them reveals their identities and roles in the bottom HUD command overlay.
+Our world is divided into six distinct zones, mapped along a continuous virtual axis:
 
-Sector 5: The Constellation
-A giant planetary network globe floats in this sector, modeled with wireframe details. Glowing Bezier lines arc across the surface of the globe, connecting distant nodes representing data relays. Floating satellites orbit the planet, emitting faint glowing signals.
-
-Sector 6: The Core Transceiver
-At the end of the walkway stands the transceiver console. A powerful, volumetric purple light beam shoots upward from the deck, carrying signals to the stars. Here, visitors can interact with a retro terminal CLI system, type in their secure relay payloads, and transmit messages into deep space accompanied by retro synthesizer chirps.
-
-
-THE ARCHITECTS OF THE VOID
-==========================
-
-Arthur Leywin - Core Architect
-Shaper of the WebGL elements, camera movements, and mathematical environments. He makes sure the universe behaves.
-
-Tessia Eralith - Lead UI Developer
-Artist of motion, styling, and responsive user layouts. She breathes life into the visual HUD.
-
-Elijah Knight - System Engineer
-Bridges the interactive frontend with server nodes and secures the data paths.
+1. The Gateway — The entrance. Holographic rings and particle fields.
+2. The Core — The pulsing heart of our network and service nodes.
+3. The Lab — Where we build. Terminals and active project holograms.
+4. The Team — The minds behind the machine. Holographic profiles.
+5. The Network — Our global reach, visualized through a planetary data mesh.
+6. The Terminal — The contact point. Open a secure channel with us.
 
 
-THE ENGINE UNDERNEATH
-=====================
+THE BIOLUMINESCENT CYBER AESTHETIC
 
-This world is rendered entirely in three dimensions using React, Vite, React Three Fiber, and Three.js. It features a custom virtual scroll engine that maps scrolling inputs directly to linear camera travel paths, ensuring zero DOM scrolling and keeping the performance crisp. Synthesized sound effects are generated on the fly via the browser Web Audio API, leaving the codebase light and fast.
+We designed our world to feel like the deep web meets a neon-lit cyberpunk megacity. The UI doesn't just sit there—it reacts. 
 
-This is Interactions. A digital civilization built by teenagers, for the future.
+Our color system abandons the flat black of standard dark mode in favor of the Abyss—a deep indigo-charcoal. We use Electric Cyan for data, Proton Magenta for our AI and rebellious edge, and Solar Orange for critical anomalies.
+
+CONNECT WITH US
+
+The channel is open. If you want to collaborate, contribute, or just see what we're building next:
+
+---
+
+<div align="center">
+  <i>"We don't predict the future. We code it."</i><br/>
+  <b>© 2025 INTERACTIONS</b>
+</div>

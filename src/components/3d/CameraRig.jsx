@@ -3,17 +3,13 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { ZONE_CAMERA_POSITIONS, CAMERA_CONFIG, ZONE_COUNT } from '@/utils/constants'
 
-export default function CameraRig({ children, scrollRef }) {
+export default function CameraRig({ children, scrollProgress = 0 }) {
   const groupRef = useRef()
   const smoothMouse = useRef({ x: 0, y: 0 })
   const currentPos = useRef(new THREE.Vector3(0, 0, 12))
   const currentTarget = useRef(new THREE.Vector3(0, 0, 0))
   const currentFov = useRef(60)
   const { camera } = useThree()
-
-  // Track scroll progress and velocity state-free
-  const lastProgress = useRef(0)
-  const smoothVelocity = useRef(0)
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime()
@@ -23,7 +19,7 @@ export default function CameraRig({ children, scrollRef }) {
     smoothMouse.current.x = THREE.MathUtils.lerp(smoothMouse.current.x, pointer.x, 0.025)
     smoothMouse.current.y = THREE.MathUtils.lerp(smoothMouse.current.y, pointer.y, 0.025)
 
-    const progress = scrollRef && scrollRef.current !== undefined ? scrollRef.current : 0
+    const progress = scrollProgress
     const rawZone = progress * ZONE_COUNT
     const zoneIndex = Math.min(Math.floor(rawZone), ZONE_COUNT - 1)
     const nextZoneIndex = Math.min(zoneIndex + 1, ZONE_COUNT - 1)
@@ -55,32 +51,14 @@ export default function CameraRig({ children, scrollRef }) {
 
     currentFov.current = THREE.MathUtils.lerp(currentFov.current, targetFov, lerpSpeed)
 
-    // Calculate scroll velocity
-    const velocity = Math.abs(progress - lastProgress.current)
-    lastProgress.current = progress
-
-    // Smooth the velocity out to avoid jagged transitions
-    smoothVelocity.current = THREE.MathUtils.lerp(smoothVelocity.current, velocity, 0.1)
-
-    // Calculate warp FOV zoom: expands the field of view on high acceleration
-    // Calibrated to widen the camera fov by up to ~20 degrees at peak transition
-    const warpFov = Math.min(smoothVelocity.current * 1200, 20)
-
-    // Handheld g-force vibrations: high-frequency noise proportional to velocity
-    // Creates a realistic camera rattle/shake during flight transitions
-    const shakeIntensity = Math.min(smoothVelocity.current * 8, 0.45)
-    const shakeX = Math.sin(t * 45) * shakeIntensity * 0.3
-    const shakeY = Math.cos(t * 40) * shakeIntensity * 0.3
-    const shakeZ = Math.sin(t * 50) * shakeIntensity * 0.2
-
     const breatheY = Math.sin(t * CAMERA_CONFIG.breatheSpeed) * CAMERA_CONFIG.breatheAmplitude
     const driftX = Math.sin(t * 0.08) * 0.1
     const driftZ = Math.cos(t * 0.06) * 0.08
 
     camera.position.set(
-      currentPos.current.x + smoothMouse.current.x * CAMERA_CONFIG.parallaxFactor * 2 + driftX + shakeX,
-      currentPos.current.y + breatheY - smoothMouse.current.y * CAMERA_CONFIG.parallaxFactor + shakeY,
-      currentPos.current.z + driftZ + shakeZ
+      currentPos.current.x + smoothMouse.current.x * CAMERA_CONFIG.parallaxFactor * 2 + driftX,
+      currentPos.current.y + breatheY - smoothMouse.current.y * CAMERA_CONFIG.parallaxFactor,
+      currentPos.current.z + driftZ
     )
 
     camera.lookAt(
@@ -89,7 +67,7 @@ export default function CameraRig({ children, scrollRef }) {
       currentTarget.current.z
     )
 
-    camera.fov = currentFov.current + warpFov
+    camera.fov = currentFov.current
     camera.updateProjectionMatrix()
 
     groupRef.current.rotation.y = smoothMouse.current.x * 0.015
